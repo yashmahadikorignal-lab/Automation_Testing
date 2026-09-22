@@ -1,10 +1,10 @@
 from PageObjects.HomePage import HomePage
 from PageObjects.RegisterPage import RegisterPage
-from Utitlities.random_string import random_string
-from Utitlities.readproperty import ReadConfig
+from Utilities.random_string import random_string
+from Utilities.readproperty import ReadConfig
 import os
 import pytest
-from Utitlities.customlogger import LogGen
+from Utilities.customlogger import LogGen
 class TestRegisterPage:
     base_url=ReadConfig.get_application_url()
     firstname=ReadConfig.get_firstname()
@@ -36,7 +36,7 @@ class TestRegisterPage:
             assert True
             self.driver.close()
         else:
-            self.driver.save_screenshot(os.path.abspath(os.curdir)+"\\Screenshots\\"+"test_account_reg.png")
+            self.driver.save_screenshot(os.path.join(os.path.abspath(os.curdir),"Screenshots","test_account_reg.png"))
             self.logger.error("Account Registration Failed")
             self.driver.close()
             assert False

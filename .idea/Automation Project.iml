@@ -4,11 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/Framework" />
     </content>
-    <orderEntry type="jdk" jdkName="D:\Manual testing\Automation Project\Framework" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="D:\Manual testing\Automation Project\Framework (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
-  <component name="PackageRequirementsSettings" />
-  <component name="PyDocumentationSettings" />
-  <component name="ReSTService" />
-  <component name="TestRunnerService" />
 </module>

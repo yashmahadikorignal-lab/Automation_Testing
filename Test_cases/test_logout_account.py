@@ -1,8 +1,8 @@
 import pytest
 import time
-from Utitlities.readproperty import ReadConfig
-from Utitlities.XLutils import ExcelUtils
-from Utitlities.customlogger import LogGen
+from Utilities.readproperty import ReadConfig
+from Utilities.XLutils import ExcelUtils
+from Utilities.customlogger import LogGen
 from PageObjects.LoginPage import LoginPage
 from PageObjects.HomePage import HomePage
 from PageObjects.RegisterPage import RegisterPage
@@ -33,7 +33,7 @@ class Test_Login:
             self.lp.enter_password(self.password)
             self.lp.click_login()
             self.driver.implicitly_wait(10)
-            self.targetpage=self.lp.isMyAccountPageExist()
+            self.targetpage=self.lp.ismyaccountPageExist()
             if self.exp=='Valid':
                 if self.targetpage==True:
                     lst_status.append("pass")
@@ -51,11 +51,12 @@ class Test_Login:
                 else:
                     lst_status.append("pass")
         self.driver.close()
-        if "Fail" not in lst_status:
+        if "fail" not in lst_status:
             assert True
         else:
+            self.logger.info("end test_login_dtt")
             assert False
-        self.logger.info("end test_login_dtt")
+
 
 
 

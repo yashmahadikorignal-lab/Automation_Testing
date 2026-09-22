@@ -1,0 +1,25 @@
+# Virtual environments — NEVER commit these. Jenkins builds its own from requirements.txt.
+Framework/
+.venv/
+venv/
+env/
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated test artifacts — Jenkins regenerates these every build and archives them
+Report/
+Screenshots/
+Logs/
+results/
+allure-results/
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

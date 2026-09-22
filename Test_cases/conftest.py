@@ -1,65 +1,95 @@
-import datetime
+import os
+from datetime import datetime
 
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-import sys, os
-from datetime import datetime
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-@pytest.fixture()
-def setup(browser):
-    if browser == "chrome":
-        options = Options()
-        options.add_experimental_option("detach", True)
-        service = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=options)
-
-    elif browser == "firefox":
-        from selenium.webdriver.firefox.service import Service as FirefoxService
-        from selenium.webdriver.firefox.options import Options as FirefoxOptions
-        service = FirefoxService(GeckoDriverManager().install())
-        options = FirefoxOptions()
-        driver = webdriver.Firefox(service=service, options=options)
-
-    elif browser == "edge":
-        from selenium.webdriver.edge.service import Service as EdgeService
-        from selenium.webdriver.edge.options import Options as EdgeOptions
-        service = EdgeService(EdgeChromiumDriverManager().install())
-        options = EdgeOptions()
-        driver = webdriver.Edge(service=service, options=options)
-
-    else:
-        raise ValueError(f"Unsupported browser: {browser}")
-
-    driver.maximize_window()
-    yield driver
-    driver.quit()
-
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def pytest_addoption(parser):
-    parser.addoption("--browser")
+    parser.addoption("--browser", action="store", default="chrome",
+                      help="Browser to run tests against: chrome | firefox | edge")
+    parser.addoption("--headless", action="store_true", default=False,
+                      help="Run the browser headless (required on CI agents with no display)")
+
 
 @pytest.fixture
 def browser(request):
     return request.config.getoption("--browser")
 
+
+@pytest.fixture()
+def setup(browser, request):
+    headless = request.config.getoption("--headless")
+
+    if browser == "chrome":
+        options = ChromeOptions()
+        options.add_argument("--window-size=1920,1080")
+        if headless:
+            options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+        else:
+            options.add_experimental_option("detach", True)
+        service = ChromeService(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=options)
+
+    elif browser == "firefox":
+        options = FirefoxOptions()
+        options.add_argument("--width=1920")
+        options.add_argument("--height=1080")
+        if headless:
+            options.add_argument("--headless")
+        service = FirefoxService(GeckoDriverManager().install())
+        driver = webdriver.Firefox(service=service, options=options)
+
+    elif browser == "edge":
+        options = EdgeOptions()
+        options.add_argument("--window-size=1920,1080")
+        if headless:
+            options.add_argument("--headless=new")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+        service = EdgeService(EdgeChromiumDriverManager().install())
+        driver = webdriver.Edge(service=service, options=options)
+
+    else:
+        raise ValueError(f"Unsupported browser: {browser}")
+
+    if not headless:
+        driver.maximize_window()
+
+    yield driver
+    driver.quit()
+
+
 @pytest.hookimpl(optionalhook=True)
 def pytest_html_report_title(report):
     report.title = "OpenCart Test Report"
+
 
 @pytest.hookimpl(optionalhook=True)
 def pytest_html_results_summary(prefix, summary, postfix):
     prefix.extend([
         "Project Name : OpenCart Test Report",
         "Module Name : Login Module",
-        "Tester Name : Yash Mahadik"
+        "Tester Name : Yash Mahadik",
     ])
+
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure(config):
-    config.option.htmlpath=os.path.abspath(os.curdir)+"\\Report\\"+datetime.now().strftime("%d-%m-%y %H-%M-%S")+".html"
+    if not config.option.htmlpath:
+        report_dir = os.path.join(PROJECT_ROOT, "Report")
+        os.makedirs(report_dir, exist_ok=True)
+        filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".html"
+        config.option.htmlpath = os.path.join(report_dir, filename)

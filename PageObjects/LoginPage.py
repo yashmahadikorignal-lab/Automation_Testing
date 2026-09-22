@@ -1,7 +1,7 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-from Utitlities.readproperty import ReadConfig
+from Utilities.readproperty import ReadConfig
 class LoginPage:
     txt_login_email_xpath="//input[@id='input-email']"
     txt_login_password_xpath="//input[@id='input-password']"
@@ -17,8 +17,14 @@ class LoginPage:
 
     def click_login(self):
         self.driver.find_element(By.XPATH,self.btn_login_xpath).click()
-    def isMyAccountPageExist(self):
+
+    def ismyaccountPageExist(self):
         try:
-            return self.driver.find_element(By.XPATH,self.msg_myaccount_xpath).is_displayed()
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located(
+                    (By.XPATH, self.msg_myaccount_xpath)
+                )
+            )
+            return True
         except:
             return False

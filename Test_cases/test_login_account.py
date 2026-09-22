@@ -1,8 +1,8 @@
 import pytest
 from PageObjects.HomePage import HomePage
 from PageObjects.LoginPage import LoginPage
-from Utitlities.customlogger import LogGen
-from Utitlities.readproperty import ReadConfig
+from Utilities.customlogger import LogGen
+from Utilities.readproperty import ReadConfig
 import os
 class TestLoginAccount:
     baseURL=ReadConfig.get_application_url()
@@ -22,7 +22,7 @@ class TestLoginAccount:
         self.lg.enter_password(self.password)
         self.lg.click_login()
         self.driver.implicitly_wait(10)
-        if self.lg.isMyAccountPageExist():
+        if self.lg.ismyaccountPageExist():
             self.logger.info("account logged in")
             self.driver.close()
             assert True

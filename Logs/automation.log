@@ -162,3 +162,30 @@
 09/08/26 04:43:09 PM - automation - INFO - Account Registration Successful
 09/08/26 04:43:18 PM - automation - INFO - Starting test_login_dtt
 09/08/26 04:43:51 PM - automation - INFO - end test_login_dtt
+09/14/26 11:38:24 AM - automation - INFO - account_registration is started
+09/14/26 11:38:38 AM - automation - INFO - account logging is started
+09/14/26 11:38:48 AM - automation - INFO - Starting test_login_dtt
+09/14/26 11:41:28 AM - automation - INFO - account_registration is started
+09/14/26 11:41:55 AM - automation - INFO - account logging is started
+09/14/26 11:44:10 AM - automation - INFO - Starting test_login_dtt
+09/14/26 12:57:30 PM - automation - INFO - account_registration is started
+09/14/26 12:57:39 PM - automation - INFO - Account Registration Successful
+09/14/26 12:57:47 PM - automation - INFO - account logging is started
+09/14/26 12:58:00 PM - automation - ERROR - account not logged in
+09/14/26 12:58:10 PM - automation - INFO - Starting test_login_dtt
+09/14/26 01:03:13 PM - automation - INFO - account_registration is started
+09/14/26 01:03:19 PM - automation - INFO - Account Registration Successful
+09/14/26 01:03:25 PM - automation - INFO - account logging is started
+09/14/26 01:03:29 PM - automation - INFO - account logged in
+09/14/26 01:03:29 PM - automation - INFO - Login test ended
+09/14/26 01:03:36 PM - automation - INFO - Starting test_login_dtt
+09/14/26 01:05:31 PM - automation - INFO - Starting test_login_dtt
+09/14/26 01:06:03 PM - automation - INFO - end test_login_dtt
+09/14/26 01:12:34 PM - automation - INFO - Starting test_login_dtt
+09/15/26 07:43:49 AM - automation - INFO - Starting test_login_dtt
+09/15/26 10:04:54 AM - automation - INFO - Starting test_login_dtt
+09/15/26 10:05:33 AM - automation - INFO - Starting test_login_dtt
+09/15/26 10:06:06 AM - automation - INFO - end test_login_dtt
+09/15/26 10:07:04 AM - automation - INFO - Starting test_login_dtt
+09/15/26 10:07:36 AM - automation - INFO - end test_login_dtt
+09/15/26 10:09:10 AM - automation - INFO - Starting test_login_dtt
